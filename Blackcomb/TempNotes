@@ -1,0 +1,112 @@
+
+
+
+		
+				<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-simple</artifactId>
+			<version>1.7.26</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.26</version>
+		</dependency>
+
+		
+		
+		
+		import io.appium.java_client.MobileElement;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
+import io.appium.java_client.remote.MobileCapabilityType;
+		
+			public static AndroidDriver<MobileElement> invoke_AndroidDriver() throws MalformedURLException {
+
+		// Set DesiredCapabilities
+		DesiredCapabilities oDesiredCapabilities = new DesiredCapabilities();
+
+		if (strDeviceName.toUpperCase().contains("EMULATOR")) {
+			strDeviceType = "EMULATOR";
+		} else if (strDeviceName.toUpperCase().contains("ANDROID")) {
+			strDeviceType = "REAL";
+		} else if (strDeviceName.toUpperCase().contains("CLOUD")) {
+			strDeviceType = "CLOUD";
+		} else if (strDeviceName.toUpperCase().contains("SIMULATOR")) {
+			strDeviceType = "SIMULATOR";
+		}
+
+		switch (strDeviceType.toUpperCase()) {
+		// case statements
+		// values must be of same type of expression
+		case "EMULATOR":
+			// Statements
+			break; // break is optional
+
+		case "REAL":
+			// strDeviceName = "Android Device";
+			// oDesiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME,
+			// "Android");
+
+			// Statements
+			break; // break is optional
+
+		case "CLOUD":
+			// Statements
+			break; // break is optional
+
+		case "SIMULATOR":
+			// Statements
+			break; // break is optional
+
+		default:
+			// Statements
+		}
+
+		oDesiredCapabilities.setCapability(MobileCapabilityType.DEVICE_NAME, strDeviceName);
+		// oDesiredCapabilities.setCapability("udid", "emulator-5554");
+		oDesiredCapabilities.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
+
+		switch (strAPPType.toUpperCase()) {
+		// case statements
+		// values must be of same type of expression
+		case "NATIVE":
+
+			// Getting the APK
+			File oAPK = new File(new File("src/test/resources"), strAPK);
+
+			oDesiredCapabilities.setCapability(MobileCapabilityType.APP, oAPK.getAbsolutePath());
+			break; // break is optional
+
+		case "WEB":
+			oDesiredCapabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "Chrome");
+			oDesiredCapabilities.setCapability(MobileCapabilityType.AUTO_WEBVIEW, true);
+			oDesiredCapabilities.setCapability("chromedriverExecutable",
+					"C:\\Users\\Administrator\\node_modules\\appium\\node_modules\\appium-chromedriver\\chromedriver\\win\\chromedriver.exe");
+
+			break; // break is optional
+
+		case "HYBRID":
+			// Statements
+			break; // break is optional
+
+		// We can have any number of case statements
+		// below is default statement, used when none of the cases is true.
+		// No break is needed in the default case.
+		default:
+			// Statements
+		}
+
+		// io.appium.android.apis/io.appium.android.apis.ApiDemos
+		oDesiredCapabilities.setCapability(MobileCapabilityType.PLATFORM_NAME, "Android");
+
+		AndroidDriver<MobileElement> driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"),
+				oDesiredCapabilities);
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+
+		return driver;
+	}
